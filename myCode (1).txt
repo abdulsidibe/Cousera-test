@@ -1,0 +1,41 @@
+//run this code and be able to conceal the id of someone in an image or even digitalize video if you are really good with code. Preferable
+
+/*this function ensures that the x and y cordinates of the image is the range of its size and not a negate value hense its arguments "cordinate" and "size". It returns the cordinate of the image if it is not less than zero or the size of the image minus one ie not greater or less than size of image. The function is called when we to want randomly pick pixels within the image of the next function below.*/
+function ensureWithinImage(cordinate, size){
+    if(cordinate < 0){
+        return 0;
+    }
+    if(cordinate >= size){
+        return size - 1;
+    }
+    else{
+        return cordinate;
+    }
+}
+/*this function ensures that near-by pixels are randomly picked within an image. The previous function called  ensureWithinImage is called to ensure all pixel are within the size of the image. It takes an image, its x and y cordinates, and it diameter and compute the distance within which the pixel is picked. */
+function getNearbyPixel(image, x,y, diameter){
+    var dx = Math.random() * diameter - diameter / 2;
+    var dy = Math.random() * diameter - diameter / 2;
+    var newX = ensureWithinImage(x + dx, image.getWidth());
+    var newY = ensureWithinImage(y + dy, image.getHeight());
+    return image.getPixel(newX, newY);
+}
+var image = new SimpleImage("rodger.png");
+var outImage = new SimpleImage(image.getWidth(), image.getHeight());
+for (var pixel of image.values()){
+    var x = pixel.getX();
+    var y = pixel.getY();
+    /*Using a random fuction a method of class perhaps in JavaScript and  picking pixels and setting them as the pixel of the Outimage. Here in the body of the if, there is a 50% chance that pixel neighbouring pixel will picked. A pixel is considered a neigbhouring pixel if it is within 20 pixel. ie there is a 0.50 probability that a pixel will picked from the pixels within the 20 pixels or the pixel remain the same. 
+    That is why after the body of the if statement that contains random source function, the function from above name getNearbyPixel was called, the image, its x and y cordinates, and value for the diameter were set as it argument and stored in variable name otherPixel. "we ill later figure out other ways to compute diameter. but for now we digress since it was not thought."
+    
+    In the nutshed this just randomly copy the pixels from image and setting them on a blank image. You can run this on a digital video file to conceal the face of someone*/
+    if(Math.random() > 0.05){
+        var otherPixel = getNearbyPixel(image, x,y, 20);
+        outImage.setPixel(x,y, otherPixel);
+    }
+    else{
+        outImage.setPixel(x,y, pixel);
+    }
+}
+print(image)
+print (outImage);

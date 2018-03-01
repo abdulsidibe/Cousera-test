@@ -1,0 +1,42 @@
+//A function with two arguments, an image and it size.
+
+function enlargImage(image, size){
+// start by importing the image your to enlarge(inImage).
+    var inImage = new SimpleImage(image);
+    print (inImage)
+
+    //Next you a draw blank image twice the side of the imported image.
+    var outImage = new SimpleImage(inImage.getWidth()*size, 
+                                    inImage.getHeight()*size);
+                                    
+    //Run a for each loop
+    for(var p of outImage.values()){
+        //Divide the value of each pixel by two
+        //and take the most significant number using the Math.floor
+        //function. And assign them to variable x and y.
+        //example if you divide 5 by 2. The answer is 2.5, the most //significant number is 2.
+        var x = Math.floor(p.getX() /size);
+        var y = Math.floor(p.getY() /size);
+        //Assign the values of x and y to the Pixels of the inImage
+        // and store in a variable inPixel.
+        var inPixel = inImage.getPixel(x,y);
+        //Get the values of the variabe inPixel and set them
+        //to the RGB values of the iteration variable of the outPixel
+        // in the for loop.
+        p.setRed(inPixel.getRed());
+        p.setGreen(inPixel.getGreen());
+        p.setBlue(inPixel.getBlue());
+    }
+    return outImage;
+}    
+//print the Inmage 
+/*var image = new SimpleImage("myImage.png")
+var width = image.getWidth();
+var height = image.getHeight();
+var xIn = xOut;var yIn = yOut;
+if (xIn >= width) xIn = xIn - width;
+if (yIn >=height) yIn = yIn - height;
+print(image);*/
+print (enlargImage("skyline.jpg", 2));
+//Print the enlarge results.
+

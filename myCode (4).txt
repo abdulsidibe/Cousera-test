@@ -1,0 +1,72 @@
+// write your code here
+//this fuction shifts the pixel of images.
+
+
+function shift(img){
+    var nim = new SimpleImage(img.getWidth(), img.getHeight());
+    
+    for(var pix of img.values()){
+        var x = pix.getX();
+        var y = pix.getY();
+        
+        var newpx = nim.getPixel(x,y);
+        newpx.setRed(Math.floor(pix.getRed() / 16));
+        newpx.setGreen(Math.floor(pix.getGreen() / 16));
+        newpx.setBlue(Math.floor(pix.getBlue() / 16));
+    }
+    return nim;
+}
+//these two fuctions chops sizes of images
+function pixExchange(pixVal){
+    var x = Math.floor(pixVal/16) * 16;
+    return x
+}
+function chop2Hide(image){
+    for(var px of image.values()){
+        px.setRed(pixExchange(px.getRed()));
+        px.setGreen(pixExchange(px.getGreen()));
+        px.setBlue(pixExchange(px.getBlue()));
+    }
+    return image;
+}
+function crop(image, width, height){
+     var n = new SimpleImage(width,height);
+     for(var p of image.values()){
+   	   var x = p.getX();
+   	   var y = p.getY();
+  	   if (x < width && y < height){
+            var np = n.getPixel(x,y);
+            np.setRed(p.getRed());
+            np.setBlue(p.getBlue());
+            np.setGreen(p.getGreen()); 
+}
+     }
+     return n;
+}
+/*it takes 2 images and combine their rgb values, after cropping them using the crop function*/
+
+
+
+
+function combine(hideImage, startImage){
+    var hideImg = new SimpleImage(hideImage);
+    var startImg = new SimpleImage(startImage);
+    for(var p of startImg){
+        
+    }
+    var combined = hideImg + startImg;
+    return combined;
+}
+var a = new SimpleImage("astrachan.jpg");
+var b = new SimpleImage("duvall.jpg");
+var img2Bshift = shift(a);
+var img2BChop = chop2Hide(b);
+var test1 = crop(img2Bshift, 200,300);
+var test2 = crop(img2BChop, 200,300);
+var comp = combine(test1, test2);
+
+//print (shift(img2BChopped1));
+
+
+
+

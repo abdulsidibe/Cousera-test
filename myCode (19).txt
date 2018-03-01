@@ -1,0 +1,14 @@
+// write your code here
+function pix(offset){
+    var output = new SimpleImage(400,500);
+    for (var pixel of output.values()){
+        var x = pixel.getX();
+        var y = pixel.getY();
+        pixel.setRed((x*x + y*y + offset) % 255);
+        pixel.setGreen((x*x + y*y + offset) % 255);
+        pixel.setBlue((x*x + y*y + offset) % 255);
+    }
+return output;
+}
+var result = pix(10000);
+print(result);
